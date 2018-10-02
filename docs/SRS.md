@@ -22,9 +22,11 @@ Falling box - аркадная игра, в которой предстоит управлять коробкой для набора н
 #### 2.2. Интерфейс пользователя <a name="2.2"></a>
 - Окно меню
   ![MenuScreen](https://github.com/OdareNNbI/Falling-box/blob/master/mockups/MainScreen.png)
+
 Чтобы начать игру надо нажать на экран и появится окно с игрой. Сверху показан лучший счет в игре.
 - Окно игры
   ![GameScreen](https://github.com/OdareNNbI/Falling-box/blob/master/mockups/GameScreen.png)
+
 На окне с игрой мы видим текущие очки и кнопку выхода в меню.
 
 #### 2.3. Характеристики пользователей <a name="2.3"></a>
