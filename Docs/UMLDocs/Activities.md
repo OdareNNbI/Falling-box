@@ -28,4 +28,4 @@
 ### 5. Покупка коробок<a name="5"></a>
 При нажатии на кнопку с магазином, игрок переходит в магазин, где может купить новые коробки, если ему достаточно звездочек, если нет, он может выйти в главное меню, нажав кнопку назад.
 
-![Покупка коробок](https://github.com/OdareNNbI/Falling-box/blob/master/UMLDiagrams/Activities/Buy.pngg)
+![Покупка коробок](https://github.com/OdareNNbI/Falling-box/blob/master/UMLDiagrams/Activities/Buy.png)
