@@ -27,7 +27,7 @@
 
 ### 6. Диаграмма прецедентов<a name="6"></a>
 Диаграмма прецедентов представляет собой следующую диаграмму: 
-![Диаграмма претендентов](https://github.com/OdareNNbI/Falling-box/tree/master/UMLDiagrams/UseCase)
+![Диаграмма претендентов](https://github.com/OdareNNbI/Falling-box/blob/master/UMLDiagrams/UseCase/UseCaseNew.png)
 #### 6.1 Актёры<a name="6.1"></a>
 Актёр | Описание
 --- | ---
