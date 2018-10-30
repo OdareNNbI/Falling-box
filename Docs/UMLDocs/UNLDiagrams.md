@@ -73,3 +73,4 @@
 ![Купить коробку](https://github.com/OdareNNbI/Falling-box/blob/master/UMLDiagrams/StateDiagrams/BuyBox.png)
 
 ### 6. Диаграмма компонентов<a name="6"></a>
+![Диаграмма компонентов](https://github.com/OdareNNbI/Falling-box/blob/master/UMLDiagrams/DeplyementDiagram/Diagram.png)
