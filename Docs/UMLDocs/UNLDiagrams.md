@@ -58,7 +58,18 @@
 ![Диаграмма последовательности](https://github.com/OdareNNbI/Falling-box/blob/master/UMLDiagrams/Sequence/SequenceDiagram.png)
 
 ### 4. Диаграмма классов<a name="4"></a>
+![Диагармма классов](https://github.com/OdareNNbI/Falling-box/blob/master/UMLDiagrams/ClassDiagram/ClassDiagram.png)
 
 ### 5. Диаграмма состояний<a name="5"></a>
+#### 5.1 Начать игру
+![Начать игру](https://github.com/OdareNNbI/Falling-box/blob/master/UMLDiagrams/StateDiagrams/Play.png)
+#### 5.2 Управлять коробкой
+![Управлять коробкой](https://github.com/OdareNNbI/Falling-box/blob/master/UMLDiagrams/StateDiagrams/Controll.png)
+#### 5.3 Собрать звездочку
+![Собрать звездочку](https://github.com/OdareNNbI/Falling-box/blob/master/UMLDiagrams/StateDiagrams/CollectStar.png)
+#### 5.4 Войти в магазин
+![Войти в магазин](https://github.com/OdareNNbI/Falling-box/blob/master/UMLDiagrams/StateDiagrams/Shop.png)
+#### 5.5 Купить коробку
+![Купить коробку](https://github.com/OdareNNbI/Falling-box/blob/master/UMLDiagrams/StateDiagrams/BuyBox.png)
 
 ### 6. Диаграмма компонентов<a name="6"></a>
