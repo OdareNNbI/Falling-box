@@ -8,6 +8,11 @@ public class LevelManager : BaseManager<LevelManager>
 
     private Level currentLevel;
 
+    public Level CurrentLevel
+    {
+        get { return currentLevel; }
+    }
+
     private void Start()
     {
         CreateLevel();

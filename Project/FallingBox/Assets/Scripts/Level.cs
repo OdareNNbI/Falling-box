@@ -20,15 +20,29 @@ public class Level : MonoBehaviour
     private Box currentBox;
     private Platform collisionPlatform;
 
+    public Box CurrentBox
+    {
+        get { return currentBox; }
+    }
+
+
+    private void OnEnable()
+    {
+        Box.OnCollide += Box_OnCollide;
+    }
+
+    private void OnDisable()
+    {
+        Box.OnCollide -= Box_OnCollide;
+    }
+
 
     public void CreateLevel()
     {
-        lastPlatformYPosition = Camera.main.ViewportToWorldPoint(Vector2.up).y;
+        lastPlatformYPosition = CameraManager.Instance.CameraUpYPosition;
         currentDistanceDetweenPlatform = Random.Range(minDistanceBetweenPlatforms, maxDistanceBetweenPlatforms);
         
         currentBox = Instantiate(boxPrefab, Vector2.up * (lastPlatformYPosition - currentDistanceDetweenPlatform + Y_OFFSET_BOX_UPPER_PLATFORM), Quaternion.identity, transform);
-        
-        currentBox.OnCollide += CurrentBox_OnCollide;
         
         Platform mainPlatform = Instantiate(mainPlatformPrefab,
             Vector2.up * (lastPlatformYPosition - currentDistanceDetweenPlatform), Quaternion.identity, transform);
@@ -54,14 +68,18 @@ public class Level : MonoBehaviour
             }
         }
         
-        
         if (existedPlatforms.Count < PLATFORM_BUFFER)
         {
             CreatePlatform(PLATFORM_BUFFER - existedPlatforms.Count);
         }
+
+        for (int i = 0, n = existedPlatforms.Count; i < n; i++)
+        {
+            existedPlatforms[i].PlatformUpdate(deltaTime);
+        }
         
         int deletedPlatformsCount = 0;
-        float cameraUpYPosition = Camera.main.ViewportToWorldPoint(Vector2.one).y;
+        float cameraUpYPosition = CameraManager.Instance.CameraUpYPosition;
         for (int i = existedPlatforms.Count - 1; i >= 0; i--)
         {
             if (existedPlatforms[i].transform.position.y >= cameraUpYPosition)
@@ -70,10 +88,6 @@ public class Level : MonoBehaviour
                 
                 Destroy(existedPlatforms[i].gameObject);
                 existedPlatforms.RemoveAt(i);
-            }
-            else if (currentBox.transform.position.y <= existedPlatforms[i].SpriteUpYPosition)
-            {
-                existedPlatforms[i].DisableCollision();
             }
         }
 
@@ -100,7 +114,7 @@ public class Level : MonoBehaviour
         }
     }
 
-    private void CurrentBox_OnCollide(Platform platform)
+    private void Box_OnCollide(Platform platform)
     {
         collisionPlatform = platform;
     }

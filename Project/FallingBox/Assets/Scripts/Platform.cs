@@ -15,11 +15,6 @@ public class Platform : MonoBehaviour
 
     private int moveCoefficient;
     private float speed;
-
-    public float SpriteUpYPosition
-    {
-        get { return transform.position.y + platformSprite.bounds.extents.y * 2; }
-    }
     
     float SpriteHalfXSize
     {
@@ -40,11 +35,10 @@ public class Platform : MonoBehaviour
         speed = UnityEngine.Random.Range(minSpeed, maxSpeed);
     }
 
-    void Update()
+    public void PlatformUpdate(float deltaTime)
     {
-        float cameraLeftXPosition = Camera.main.ViewportToWorldPoint(new Vector2(0, 0)).x;
-        float cameraRightXPosition = Camera.main.ViewportToWorldPoint(new Vector2(1, 1)).x;
-        float cameraCenterXPosition = Camera.main.ViewportToWorldPoint(new Vector2(0.5f, 1)).x;
+        float cameraLeftXPosition = CameraManager.Instance.CameraLeftXPosition;
+        float cameraRightXPosition = CameraManager.Instance.CameraRightXPosition;
 
         if (moveCoefficient == 1)
         {
@@ -61,7 +55,7 @@ public class Platform : MonoBehaviour
             }
         }
 
-        transform.Translate(Vector3.right * speed * moveCoefficient * Time.fixedDeltaTime);
+        transform.Translate(Vector3.right * speed * moveCoefficient * deltaTime);
 
     }
 

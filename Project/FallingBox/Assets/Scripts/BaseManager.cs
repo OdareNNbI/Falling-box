@@ -8,7 +8,7 @@ public class BaseManager<T> : MonoBehaviour
 	private static T instance;
 
 
-	public T Instance
+	public static T Instance
 	{
 		get
 		{
@@ -24,5 +24,16 @@ public class BaseManager<T> : MonoBehaviour
 
 			return instance;
 		}
+	}
+
+	public virtual void UpdateManager(float deltaTime)
+	{
+		
+	}
+
+
+	public virtual void InitializeManager()
+	{
+		
 	}
 }

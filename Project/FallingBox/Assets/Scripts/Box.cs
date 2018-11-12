@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Box : MonoBehaviour
 {
-    public event Action<Platform> OnCollide;
+    public static event Action<Platform> OnCollide;
 
     public void StartFalling()
     {
@@ -18,7 +19,7 @@ public class Box : MonoBehaviour
         if (platform != null)
         {
             transform.parent = other.transform;
-            
+
             if (OnCollide != null)
             {
                 OnCollide(platform);
