@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseManager<T> : MonoBehaviour
+public class BaseManager<T> : MonoBehaviour, IManager
 					where T : MonoBehaviour
 {
 	private static T instance;
@@ -32,7 +32,7 @@ public class BaseManager<T> : MonoBehaviour
 	}
 
 
-	public virtual void InitializeManager()
+	public virtual void Initialize()
 	{
 		
 	}

@@ -19,6 +19,7 @@ public class Level : MonoBehaviour
     private float currentDistanceDetweenPlatform;
     private Box currentBox;
     private Platform collisionPlatform;
+    private bool isTapAvailable;
 
     public Box CurrentBox
     {
@@ -29,11 +30,15 @@ public class Level : MonoBehaviour
     private void OnEnable()
     {
         Box.OnCollide += Box_OnCollide;
+        GameManager.OnMainButtonDown += GameManager_OnMainButtonDown;
+        CameraManager.OnCameraMovedToTarget += CameraManager_OnCameraMovedToTarget;
     }
 
     private void OnDisable()
     {
         Box.OnCollide -= Box_OnCollide;
+        GameManager.OnMainButtonDown -= GameManager_OnMainButtonDown;
+        CameraManager.OnCameraMovedToTarget -= CameraManager_OnCameraMovedToTarget;
     }
 
 
@@ -52,22 +57,13 @@ public class Level : MonoBehaviour
         lastPlatformYPosition = mainPlatform.transform.position.y;
         currentDistanceDetweenPlatform = Random.Range(minDistanceBetweenPlatforms, maxDistanceBetweenPlatforms);
         
+        isTapAvailable = false;
         CreatePlatform(PLATFORM_BUFFER);
     }
-
+    
 
     public void UpdateLevel(float deltaTime)
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            if (collisionPlatform != null)
-            {
-                currentBox.StartFalling();
-                collisionPlatform.DisableCollision();
-                collisionPlatform = null;
-            }
-        }
-        
         if (existedPlatforms.Count < PLATFORM_BUFFER)
         {
             CreatePlatform(PLATFORM_BUFFER - existedPlatforms.Count);
@@ -96,6 +92,10 @@ public class Level : MonoBehaviour
             CreatePlatform(deletedPlatformsCount);
         }
 
+        if (currentBox.transform.position.y <= CameraManager.Instance.CameraDownYPosition)
+        {
+            GameManager.Instance.LoseGame();
+        }
     }
 
 
@@ -117,5 +117,21 @@ public class Level : MonoBehaviour
     private void Box_OnCollide(Platform platform)
     {
         collisionPlatform = platform;
+    }
+
+    private void GameManager_OnMainButtonDown()
+    {
+        if (collisionPlatform != null && isTapAvailable)
+        {
+            currentBox.StartFalling();
+            collisionPlatform.DisableCollision();
+            collisionPlatform = null;
+            isTapAvailable = false;
+        }
+    }
+
+    private void CameraManager_OnCameraMovedToTarget()
+    {
+        isTapAvailable = true;
     }
 }

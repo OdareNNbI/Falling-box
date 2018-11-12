@@ -1,11 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 public class CameraManager : BaseManager<CameraManager>
 {
+    public static event Action OnCameraMovedToTarget;
+    
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private Vector3 defaultCameraPosition;
     
     [Header("Camera follower")]
     [SerializeField] private float cameraYOffset;
@@ -26,7 +30,7 @@ public class CameraManager : BaseManager<CameraManager>
     {
         get
         {
-            return mainCamera.ViewportToWorldPoint(new Vector2(0, 0)).x;
+            return mainCamera.ViewportToWorldPoint(Vector2.zero).x;
         }
     }
 
@@ -34,21 +38,36 @@ public class CameraManager : BaseManager<CameraManager>
     {
         get
         {
-            return mainCamera.ViewportToWorldPoint(new Vector2(1, 1)).x;
+            return mainCamera.ViewportToWorldPoint(Vector2.one).x;
+        }
+    }
+
+    public float CameraDownYPosition
+    {
+        get
+        {
+            return mainCamera.ViewportToWorldPoint(Vector2.zero).y;
         }
     }
 
     private void OnEnable()
     {
         Box.OnCollide += Box_OnCollide;
+        GameManager.OnGameLosed += GameManager_OnGameLosed;
     }
 
     private void OnDisable()
     {
         Box.OnCollide -= Box_OnCollide;
+        GameManager.OnMenuOpened -= GameManager_OnGameLosed;
     }
 
-    private void Update()
+    public override void Initialize()
+    {
+        mainCamera.transform.position = defaultCameraPosition;
+    }
+
+    public override void  UpdateManager(float deltaTime)
     {
         if (isMoveToBoxAvailable)
         {
@@ -56,10 +75,15 @@ public class CameraManager : BaseManager<CameraManager>
             {
                 mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, endYPosition, mainCamera.transform.position.z);
                 isMoveToBoxAvailable = false;
+
+                if (OnCameraMovedToTarget != null)
+                {
+                    OnCameraMovedToTarget();
+                }
             }
             else
             {
-                mainCamera.transform.Translate(Vector3.down * speed * Time.deltaTime);
+                mainCamera.transform.Translate(Vector3.down * speed * deltaTime);
             }
         }
     }
@@ -69,5 +93,11 @@ public class CameraManager : BaseManager<CameraManager>
         isMoveToBoxAvailable = true;
 
         endYPosition = LevelManager.Instance.CurrentLevel.CurrentBox.transform.position.y + cameraYOffset;
+    }
+
+    void GameManager_OnGameLosed()
+    {
+        mainCamera.transform.position = defaultCameraPosition;
+        isMoveToBoxAvailable = false;
     }
 }

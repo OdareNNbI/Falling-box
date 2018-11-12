@@ -9,53 +9,48 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1531611523427200}
+  m_RootGameObject: {fileID: 1546753215134216}
   m_IsPrefabAsset: 1
---- !u!1 &1531611523427200
+--- !u!1 &1546753215134216
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4097494422989750}
-  - component: {fileID: 114349915923290264}
+  - component: {fileID: 4393988151094464}
+  - component: {fileID: 114183614463178834}
   m_Layer: 0
-  m_Name: Level
+  m_Name: GuiManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4097494422989750
+--- !u!4 &4393988151094464
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1531611523427200}
+  m_GameObject: {fileID: 1546753215134216}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.16000015, y: 2.5371003, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114349915923290264
+--- !u!114 &114183614463178834
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1531611523427200}
+  m_GameObject: {fileID: 1546753215134216}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e91f4a9925e09684f998286ea5e72361, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ab40d0229f26d54d802514b2d9409f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformPrefab: {fileID: 114645947547687670, guid: bd1cc038ab626b247b214b93f243eb53,
-    type: 2}
-  mainPlatformPrefab: {fileID: 114645947547687670, guid: 74ac16866bbc9a24aacc85b446456156,
-    type: 2}
-  boxPrefab: {fileID: 114270410431570024, guid: c677978737788bc449f4b013498af053,
-    type: 2}
-  minDistanceBetweenPlatforms: 2
-  maxDistanceBetweenPlatforms: 4
+  screensPrefab:
+  - {fileID: 114903249891162522, guid: bc9ee7b70f106014d8685554cc736ab4, type: 2}
+  - {fileID: 114143894305042308, guid: daa1f4c0111af45478199391bd25f4d9, type: 2}

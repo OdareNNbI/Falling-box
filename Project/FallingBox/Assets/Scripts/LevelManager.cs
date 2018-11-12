@@ -13,9 +13,16 @@ public class LevelManager : BaseManager<LevelManager>
         get { return currentLevel; }
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        CreateLevel();
+        GameManager.OnGameStarted += GameManager_OnGameStarted;
+        GameManager.OnGameLosed += GameManager_OnGameLosed;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameStarted -= GameManager_OnGameStarted;
+        GameManager.OnGameLosed -= GameManager_OnGameLosed;
     }
 
     void CreateLevel()
@@ -27,8 +34,31 @@ public class LevelManager : BaseManager<LevelManager>
         }
     }
 
-    private void Update()
+    void DestroyLevel()
     {
-        currentLevel.UpdateLevel(Time.deltaTime);
+        if (currentLevel != null)
+        {
+            Destroy(currentLevel.gameObject);
+
+            currentLevel = null;
+        }
+    }
+
+    public override void UpdateManager(float deltaTime)
+    {
+        if (currentLevel != null)
+        {
+            currentLevel.UpdateLevel(deltaTime);
+        }
+    }
+
+    void GameManager_OnGameStarted()
+    {
+        CreateLevel();
+    }
+
+    void GameManager_OnGameLosed()
+    {
+        DestroyLevel();
     }
 }
