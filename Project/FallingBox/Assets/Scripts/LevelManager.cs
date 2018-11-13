@@ -38,6 +38,7 @@ public class LevelManager : BaseManager<LevelManager>
     {
         if (currentLevel != null)
         {
+            currentLevel.DestroyLevel();
             Destroy(currentLevel.gameObject);
 
             currentLevel = null;

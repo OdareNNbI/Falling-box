@@ -50,6 +50,11 @@ public class CameraManager : BaseManager<CameraManager>
         }
     }
 
+    public Camera MainCamera
+    {
+        get { return mainCamera; }
+    }
+
     private void OnEnable()
     {
         Box.OnCollide += Box_OnCollide;

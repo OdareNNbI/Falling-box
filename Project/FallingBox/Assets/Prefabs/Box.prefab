@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4257758618127726}
   - component: {fileID: 61787743163730138}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BoxPhysics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 4101965740694286}
   - component: {fileID: 50842189838328378}
   - component: {fileID: 114270410431570024}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4939587574966214}
   - component: {fileID: 212538202977814966}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BoxGraphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}

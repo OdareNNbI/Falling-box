@@ -18,6 +18,7 @@
           <e p="LevelManager.cs" t="Include" />
           <e p="MenuScreen.cs" t="Include" />
           <e p="Platform.cs" t="Include" />
+          <e p="Spikes.cs" t="Include" />
         </e>
       </e>
       <e p="FallingBox.sln" t="IncludeFlat" />

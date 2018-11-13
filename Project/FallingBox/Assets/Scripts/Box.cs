@@ -25,5 +25,11 @@ public class Box : MonoBehaviour
                 OnCollide(platform);
             }
         }
+
+        Spikes spikes = other.collider.GetComponentInParent<Spikes>();
+        if (spikes != null)
+        {
+            GameManager.Instance.LoseGame();
+        }
     }
 }

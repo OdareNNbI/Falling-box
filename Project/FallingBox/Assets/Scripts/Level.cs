@@ -11,15 +11,21 @@ public class Level : MonoBehaviour
     [SerializeField] private Platform platformPrefab;
     [SerializeField] private Platform mainPlatformPrefab;
     [SerializeField] private Box boxPrefab;
+    [SerializeField] private Spikes spikesPrefab;
     [SerializeField] private float minDistanceBetweenPlatforms;
     [SerializeField] private float maxDistanceBetweenPlatforms;
+    [SerializeField] private float minTimeForSpikes;
+    [SerializeField] private float maxTimeForPerfectTap;
     
     private List<Platform> existedPlatforms = new List<Platform>();
     private float lastPlatformYPosition;
     private float currentDistanceDetweenPlatform;
     private Box currentBox;
+    private Spikes spikes;
     private Platform collisionPlatform;
     private bool isTapAvailable;
+    private float currentTime;
+    private bool isPerfectTap;
 
     public Box CurrentBox
     {
@@ -47,23 +53,56 @@ public class Level : MonoBehaviour
         lastPlatformYPosition = CameraManager.Instance.CameraUpYPosition;
         currentDistanceDetweenPlatform = Random.Range(minDistanceBetweenPlatforms, maxDistanceBetweenPlatforms);
         
-        currentBox = Instantiate(boxPrefab, Vector2.up * (lastPlatformYPosition - currentDistanceDetweenPlatform + Y_OFFSET_BOX_UPPER_PLATFORM), Quaternion.identity, transform);
+        currentBox = Instantiate(boxPrefab, Vector3.zero + Vector3.up * (Y_OFFSET_BOX_UPPER_PLATFORM), Quaternion.identity, transform);
         
         Platform mainPlatform = Instantiate(mainPlatformPrefab,
-            Vector2.up * (lastPlatformYPosition - currentDistanceDetweenPlatform), Quaternion.identity, transform);
+            Vector3.zero, Quaternion.identity, transform);
         
         existedPlatforms.Add(mainPlatform);
 
         lastPlatformYPosition = mainPlatform.transform.position.y;
         currentDistanceDetweenPlatform = Random.Range(minDistanceBetweenPlatforms, maxDistanceBetweenPlatforms);
+
+        spikes = Instantiate(spikesPrefab, CameraManager.Instance.MainCamera.transform);
+        spikes.CreateSpikes();
         
         isTapAvailable = false;
+        currentTime = 0f;
+        
         CreatePlatform(PLATFORM_BUFFER);
+    }
+
+    public void DestroyLevel()
+    {
+        Destroy(spikes.gameObject);
+        Destroy(currentBox.gameObject);
     }
     
 
     public void UpdateLevel(float deltaTime)
     {
+        if (isTapAvailable)
+        {
+            currentTime += deltaTime;
+
+            if (currentTime >= minTimeForSpikes)
+            {
+                spikes.MoveSpikes(deltaTime, false);
+            }
+
+            if (isPerfectTap)
+            {
+                if (currentTime >= maxTimeForPerfectTap)
+                {
+                    isPerfectTap = false;
+                }
+                else
+                {
+                    spikes.MoveSpikes(deltaTime, true);
+                }
+            }
+        }
+
         if (existedPlatforms.Count < PLATFORM_BUFFER)
         {
             CreatePlatform(PLATFORM_BUFFER - existedPlatforms.Count);
@@ -127,11 +166,22 @@ public class Level : MonoBehaviour
             collisionPlatform.DisableCollision();
             collisionPlatform = null;
             isTapAvailable = false;
+
+            if (currentTime <= maxTimeForPerfectTap)
+            {
+                isPerfectTap = true;
+            }
+            else
+            {
+                isPerfectTap = false;
+            }
         }
     }
 
     private void CameraManager_OnCameraMovedToTarget()
     {
         isTapAvailable = true;
+
+        currentTime = 0f;
     }
 }
