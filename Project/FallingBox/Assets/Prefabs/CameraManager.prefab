@@ -131,5 +131,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 20860450214843530}
   defaultCameraPosition: {x: 0, y: 0, z: -500}
-  cameraYOffset: -2
-  speed: 5
+  speed: 0.1

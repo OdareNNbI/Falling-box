@@ -53,4 +53,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   screensPrefab:
   - {fileID: 114903249891162522, guid: bc9ee7b70f106014d8685554cc736ab4, type: 2}
-  - {fileID: 114143894305042308, guid: daa1f4c0111af45478199391bd25f4d9, type: 2}
+  - {fileID: 114983145604924954, guid: daa1f4c0111af45478199391bd25f4d9, type: 2}
+  - {fileID: 114788979526655450, guid: 534746830791cb849a929c2a5fbed020, type: 2}
+  - {fileID: 114299331088341576, guid: 925e5bf36ab69654b866eea960cd4349, type: 2}

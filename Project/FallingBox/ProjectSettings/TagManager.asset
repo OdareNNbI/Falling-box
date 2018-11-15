@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Star
   layers:
   - Default
   - TransparentFX
@@ -40,4 +41,31 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2674464215
+    locked: 0
+  - name: BackgroundShadow
+    uniqueID: 2487919095
+    locked: 0
+  - name: Star
+    uniqueID: 808283727
+    locked: 0
+  - name: BoxShadow
+    uniqueID: 2202090997
+    locked: 0
+  - name: Box
+    uniqueID: 4023257751
+    locked: 0
+  - name: PlatformShadow
+    uniqueID: 3678470653
+    locked: 0
+  - name: Platform
+    uniqueID: 2057036803
+    locked: 0
+  - name: Spikes
+    uniqueID: 3765569057
+    locked: 0
+  - name: Pipe
+    uniqueID: 570493259
     locked: 0

@@ -6,17 +6,14 @@ using UnityEngine;
 
 public class CameraManager : BaseManager<CameraManager>
 {
-    public static event Action OnCameraMovedToTarget;
-    
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Vector3 defaultCameraPosition;
     
     [Header("Camera follower")]
-    [SerializeField] private float cameraYOffset;
     [SerializeField] private float speed;
 
     private bool isMoveToBoxAvailable;
-    private float endYPosition;
+    private float currentTime;
 
     public float CameraUpYPosition
     {
@@ -57,14 +54,16 @@ public class CameraManager : BaseManager<CameraManager>
 
     private void OnEnable()
     {
-        Box.OnCollide += Box_OnCollide;
         GameManager.OnGameLosed += GameManager_OnGameLosed;
+        GameManager.OnGameStarted += GameManager_OnGameStarted;
+        GameManager.OnMenuOpened += GameManager_OnMenuOpened;
     }
 
     private void OnDisable()
     {
-        Box.OnCollide -= Box_OnCollide;
         GameManager.OnMenuOpened -= GameManager_OnGameLosed;
+        GameManager.OnGameStarted -= GameManager_OnGameStarted;
+        GameManager.OnMenuOpened -= GameManager_OnMenuOpened;
     }
 
     public override void Initialize()
@@ -72,37 +71,29 @@ public class CameraManager : BaseManager<CameraManager>
         mainCamera.transform.position = defaultCameraPosition;
     }
 
-    public override void  UpdateManager(float deltaTime)
+    public override void UpdateManager(float deltaTime)
     {
         if (isMoveToBoxAvailable)
         {
-            if (mainCamera.transform.position.y <= endYPosition)
-            {
-                mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, endYPosition, mainCamera.transform.position.z);
-                isMoveToBoxAvailable = false;
-
-                if (OnCameraMovedToTarget != null)
-                {
-                    OnCameraMovedToTarget();
-                }
-            }
-            else
-            {
-                mainCamera.transform.Translate(Vector3.down * speed * deltaTime);
-            }
+            mainCamera.transform.Translate(Vector3.down * speed * currentTime * deltaTime);
+            currentTime += deltaTime;
         }
     }
-
-    private void Box_OnCollide(Platform platform)
-    {
-        isMoveToBoxAvailable = true;
-
-        endYPosition = LevelManager.Instance.CurrentLevel.CurrentBox.transform.position.y + cameraYOffset;
-    }
-
+    
+    
     void GameManager_OnGameLosed()
     {
-        mainCamera.transform.position = defaultCameraPosition;
         isMoveToBoxAvailable = false;
+    }
+
+    void GameManager_OnGameStarted()
+    {
+        isMoveToBoxAvailable = true;
+        currentTime = 0f;
+    }
+
+    void GameManager_OnMenuOpened()
+    {
+        mainCamera.transform.position = defaultCameraPosition;
     }
 }

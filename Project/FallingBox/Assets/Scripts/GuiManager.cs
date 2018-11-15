@@ -35,7 +35,7 @@ public class GuiManager : BaseManager<GuiManager>
         }
     }
 
-    void ShowScreenByType(ScreenType screenType)
+    public void ShowScreenByType(ScreenType screenType)
     {
         BaseScreen screen = existedScreens.Find((baseScreen) =>
         {
@@ -66,6 +66,6 @@ public class GuiManager : BaseManager<GuiManager>
 
     private void GameManager_OnGameLosed()
     {
-        ShowScreenByType(ScreenType.Menu);
+        ShowScreenByType(ScreenType.Lose);
     }
 }

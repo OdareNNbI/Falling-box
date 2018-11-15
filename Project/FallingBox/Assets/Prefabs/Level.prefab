@@ -55,11 +55,9 @@ MonoBehaviour:
     type: 2}
   mainPlatformPrefab: {fileID: 114645947547687670, guid: 74ac16866bbc9a24aacc85b446456156,
     type: 2}
-  boxPrefab: {fileID: 114270410431570024, guid: c677978737788bc449f4b013498af053,
-    type: 2}
-  spikesPrefab: {fileID: 114511543529411128, guid: 48858213062e2944285d6db6b2e5618f,
-    type: 2}
+  boxPrefabs:
+  - {fileID: 114680360742952948, guid: 731a3c01bdc6b1c46aa4bc003e87850c, type: 2}
+  - {fileID: 114832894568137586, guid: 191c948daae75c84c91cb66d0b89e374, type: 2}
+  - {fileID: 114270410431570024, guid: c677978737788bc449f4b013498af053, type: 2}
   minDistanceBetweenPlatforms: 2
   maxDistanceBetweenPlatforms: 4
-  minTimeForSpikes: 2.5
-  maxTimeForPerfectTap: 1

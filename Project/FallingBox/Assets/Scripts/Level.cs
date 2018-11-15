@@ -1,35 +1,47 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Level : MonoBehaviour
 {
-    public const int PLATFORM_BUFFER = 5;
+    public const int PLATFORM_BUFFER = 10;
     public const float Y_OFFSET_BOX_UPPER_PLATFORM = 2f;
+
+    public static event Action<int> OnScoreChanged;
     
     [SerializeField] private Platform platformPrefab;
     [SerializeField] private Platform mainPlatformPrefab;
-    [SerializeField] private Box boxPrefab;
-    [SerializeField] private Spikes spikesPrefab;
+    [SerializeField] private List<Box> boxPrefabs;
     [SerializeField] private float minDistanceBetweenPlatforms;
     [SerializeField] private float maxDistanceBetweenPlatforms;
-    [SerializeField] private float minTimeForSpikes;
-    [SerializeField] private float maxTimeForPerfectTap;
+
+    static int lastPlatformNumber;
     
     private List<Platform> existedPlatforms = new List<Platform>();
     private float lastPlatformYPosition;
     private float currentDistanceDetweenPlatform;
     private Box currentBox;
-    private Spikes spikes;
     private Platform collisionPlatform;
-    private bool isTapAvailable;
-    private float currentTime;
-    private bool isPerfectTap;
+    private int lastCollidedPlatformNumber = 0;
+    private int score;
 
-    public Box CurrentBox
+    public int Score
     {
-        get { return currentBox; }
+        get
+        {
+            return score;
+        }
+        set
+        {
+            score = value;
+            if (OnScoreChanged != null)
+            {
+                OnScoreChanged(score);
+            }
+        }
     }
 
 
@@ -37,14 +49,12 @@ public class Level : MonoBehaviour
     {
         Box.OnCollide += Box_OnCollide;
         GameManager.OnMainButtonDown += GameManager_OnMainButtonDown;
-        CameraManager.OnCameraMovedToTarget += CameraManager_OnCameraMovedToTarget;
     }
 
     private void OnDisable()
     {
         Box.OnCollide -= Box_OnCollide;
         GameManager.OnMainButtonDown -= GameManager_OnMainButtonDown;
-        CameraManager.OnCameraMovedToTarget -= CameraManager_OnCameraMovedToTarget;
     }
 
 
@@ -52,57 +62,37 @@ public class Level : MonoBehaviour
     {
         lastPlatformYPosition = CameraManager.Instance.CameraUpYPosition;
         currentDistanceDetweenPlatform = Random.Range(minDistanceBetweenPlatforms, maxDistanceBetweenPlatforms);
-        
+
+        Box boxPrefab = boxPrefabs.Find((temp) =>
+            {
+                return temp.BoxType == (BoxType) PlayerPrefs.GetInt(Prefs.CURRENT_BOX, 0);
+            });
         currentBox = Instantiate(boxPrefab, Vector3.zero + Vector3.up * (Y_OFFSET_BOX_UPPER_PLATFORM), Quaternion.identity, transform);
         
         Platform mainPlatform = Instantiate(mainPlatformPrefab,
             Vector3.zero, Quaternion.identity, transform);
+        lastPlatformNumber = 0;
+        mainPlatform.Initialize(lastPlatformNumber);
+        lastPlatformNumber++;
         
         existedPlatforms.Add(mainPlatform);
 
         lastPlatformYPosition = mainPlatform.transform.position.y;
         currentDistanceDetweenPlatform = Random.Range(minDistanceBetweenPlatforms, maxDistanceBetweenPlatforms);
-
-        spikes = Instantiate(spikesPrefab, CameraManager.Instance.MainCamera.transform);
-        spikes.CreateSpikes();
         
-        isTapAvailable = false;
-        currentTime = 0f;
+        Score = 0;
         
         CreatePlatform(PLATFORM_BUFFER);
     }
 
     public void DestroyLevel()
     {
-        Destroy(spikes.gameObject);
         Destroy(currentBox.gameObject);
     }
     
 
     public void UpdateLevel(float deltaTime)
     {
-        if (isTapAvailable)
-        {
-            currentTime += deltaTime;
-
-            if (currentTime >= minTimeForSpikes)
-            {
-                spikes.MoveSpikes(deltaTime, false);
-            }
-
-            if (isPerfectTap)
-            {
-                if (currentTime >= maxTimeForPerfectTap)
-                {
-                    isPerfectTap = false;
-                }
-                else
-                {
-                    spikes.MoveSpikes(deltaTime, true);
-                }
-            }
-        }
-
         if (existedPlatforms.Count < PLATFORM_BUFFER)
         {
             CreatePlatform(PLATFORM_BUFFER - existedPlatforms.Count);
@@ -133,7 +123,7 @@ public class Level : MonoBehaviour
 
         if (currentBox.transform.position.y <= CameraManager.Instance.CameraDownYPosition)
         {
-            GameManager.Instance.LoseGame();
+            GameManager.Instance.LoseGame(Score);
         }
     }
 
@@ -148,6 +138,8 @@ public class Level : MonoBehaviour
             currentDistanceDetweenPlatform = Random.Range(minDistanceBetweenPlatforms, maxDistanceBetweenPlatforms);
 
             Platform platform = Instantiate(platformPrefab, platformPosition, Quaternion.identity, transform);
+            platform.Initialize(lastPlatformNumber);
+            lastPlatformNumber++;
 
             existedPlatforms.Add(platform);
         }
@@ -156,32 +148,18 @@ public class Level : MonoBehaviour
     private void Box_OnCollide(Platform platform)
     {
         collisionPlatform = platform;
+        
+        Score += Mathf.Abs(lastCollidedPlatformNumber - platform.PlatformNumber);
+        lastCollidedPlatformNumber = platform.PlatformNumber;
     }
 
     private void GameManager_OnMainButtonDown()
     {
-        if (collisionPlatform != null && isTapAvailable)
+        if (collisionPlatform != null)
         {
             currentBox.StartFalling();
             collisionPlatform.DisableCollision();
             collisionPlatform = null;
-            isTapAvailable = false;
-
-            if (currentTime <= maxTimeForPerfectTap)
-            {
-                isPerfectTap = true;
-            }
-            else
-            {
-                isPerfectTap = false;
-            }
         }
-    }
-
-    private void CameraManager_OnCameraMovedToTarget()
-    {
-        isTapAvailable = true;
-
-        currentTime = 0f;
     }
 }

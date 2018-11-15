@@ -123,7 +123,7 @@ Prefab:
     - target: {fileID: 114697800594884376, guid: a561d358a84fb1e45a845f0c2dc817cc,
         type: 2}
       propertyPath: prefabManagers.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4038949217402506, guid: a561d358a84fb1e45a845f0c2dc817cc, type: 2}
       propertyPath: m_LocalPosition.x

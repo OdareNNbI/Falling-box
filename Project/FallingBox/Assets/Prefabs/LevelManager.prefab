@@ -52,3 +52,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 114349915923290264, guid: c6a127cde5dc9f941b8c531468a3fd8e, type: 2}
+  spikesPrefab: {fileID: 114511543529411128, guid: 48858213062e2944285d6db6b2e5618f,
+    type: 2}

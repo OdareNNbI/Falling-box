@@ -13,14 +13,33 @@ public class GameManager : BaseManager<GameManager>
 
     private List<IManager> existedManagers = new List<IManager>();
 
+    public int MaxScore
+    {
+        get
+        {
+            return PlayerPrefs.GetInt(Prefs.MAX_SCORE, 0);
+        }
+        set
+        {
+            PlayerPrefs.SetInt(Prefs.MAX_SCORE, value);
+        }
+    }
+
+    private void OnEnable()
+    {
+        LoseScreen.OnClaimButtonClicked += LoseScreen_OnClaimButtonClicked;
+    }
+
+    private void OnDisable()
+    {
+        LoseScreen.OnClaimButtonClicked -= LoseScreen_OnClaimButtonClicked;
+    }
+
     private void Awake()
     {
         Initialize();
-
-        if (OnMenuOpened != null)
-        {
-            OnMenuOpened();
-        }
+        
+        OpenMenu();
     }
 
     private void Update()
@@ -76,11 +95,30 @@ public class GameManager : BaseManager<GameManager>
         }
     }
 
-    public void LoseGame()
+    public void LoseGame(int score)
     {
         if (OnGameLosed != null)
         {
             OnGameLosed();
         }
+
+        if (score > MaxScore)
+        {
+            MaxScore = score;
+        }
+    }
+
+
+    public void OpenMenu()
+    {
+        if (OnMenuOpened != null)
+        {
+            OnMenuOpened();
+        }
+    }
+
+    private void LoseScreen_OnClaimButtonClicked()
+    {
+        OpenMenu();
     }
 }

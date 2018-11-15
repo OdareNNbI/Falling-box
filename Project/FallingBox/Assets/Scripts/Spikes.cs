@@ -4,24 +4,13 @@ using UnityEngine;
 
 public class Spikes : MonoBehaviour
 {
-    [SerializeField] private float spikesYSize;
-    [SerializeField] private float moveUpYSpeed;
-    [SerializeField] private float moveDownYSpeed;
-    
     public void CreateSpikes()
     {
-        transform.position = new Vector3(0f, CameraManager.Instance.CameraUpYPosition + spikesYSize);
+        transform.position = new Vector3(0f, CameraManager.Instance.CameraUpYPosition);
     }
 
-    public void MoveSpikes(float deltaTime, bool isUpMove)
+    public void UpdateSpikes()
     {
-        if (isUpMove)
-        {
-            transform.Translate(0f, moveUpYSpeed * deltaTime, 0f);  
-        }
-        else
-        {
-            transform.Translate(0f, -moveDownYSpeed * deltaTime, 0f);  
-        }
+        transform.position = new Vector3(0f, CameraManager.Instance.CameraUpYPosition);
     }
 }

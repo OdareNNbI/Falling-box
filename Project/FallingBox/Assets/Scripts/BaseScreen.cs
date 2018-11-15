@@ -6,7 +6,9 @@ using UnityEngine;
 public enum ScreenType
 {
     Game        = 0,
-    Menu        = 1
+    Menu        = 1,
+    Lose        = 2,
+    Shop        = 3
 }
 
 public class BaseScreen : MonoBehaviour

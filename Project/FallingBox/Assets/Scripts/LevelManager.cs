@@ -5,7 +5,9 @@ using UnityEngine;
 public class LevelManager : BaseManager<LevelManager>
 {
     [SerializeField] private Level level;
-
+    [SerializeField] private Spikes spikesPrefab;
+    
+    private Spikes spikes;
     private Level currentLevel;
 
     public Level CurrentLevel
@@ -45,8 +47,17 @@ public class LevelManager : BaseManager<LevelManager>
         }
     }
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        
+        spikes = Instantiate(spikesPrefab, transform);
+        spikes.CreateSpikes();
+    }
+    
     public override void UpdateManager(float deltaTime)
     {
+        spikes.UpdateSpikes();
         if (currentLevel != null)
         {
             currentLevel.UpdateLevel(deltaTime);
