@@ -45,6 +45,9 @@ TagManager:
   - name: Background
     uniqueID: 2674464215
     locked: 0
+  - name: Spikes
+    uniqueID: 3765569057
+    locked: 0
   - name: BackgroundShadow
     uniqueID: 2487919095
     locked: 0
@@ -62,9 +65,6 @@ TagManager:
     locked: 0
   - name: Platform
     uniqueID: 2057036803
-    locked: 0
-  - name: Spikes
-    uniqueID: 3765569057
     locked: 0
   - name: Pipe
     uniqueID: 570493259
