@@ -17,7 +17,7 @@ public class BaseManager<T> : MonoBehaviour, IManager
 				instance = FindObjectOfType<T>();
 				if (instance == null)
 				{
-					GameObject obj = new GameObject(typeof(T).ToString() + " Auto Singleton");
+					var obj = new GameObject(typeof(T).ToString() + " Auto Singleton");
 					instance = obj.AddComponent<T>();
 				}
 			}
