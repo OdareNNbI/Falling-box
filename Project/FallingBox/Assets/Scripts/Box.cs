@@ -31,23 +31,21 @@ public class Box : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D other)
     {
+        Platform platform = other.collider.GetComponentInParent<Platform>();
+        if (platform != null)
         {
-            Platform platform = other.collider.GetComponentInParent<Platform>();
-            if (platform != null)
-            {
-                transform.parent = other.transform;
+            transform.parent = other.transform;
 
-                if (OnCollide != null)
-                {
-                    OnCollide(platform);
-                }
-            }
-
-            Spikes spikes = other.collider.GetComponentInParent<Spikes>();
-            if (spikes != null)
+            if (OnCollide != null)
             {
-                GameManager.Instance.LoseGame(LevelManager.Instance.CurrentLevel.Score);
+                OnCollide(platform);
             }
+        }
+
+        Spikes spikes = other.collider.GetComponentInParent<Spikes>();
+        if (spikes != null)
+        {
+            GameManager.Instance.LoseGame(LevelManager.Instance.CurrentLevel.Score);
         }
     }
 
