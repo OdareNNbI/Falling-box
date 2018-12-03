@@ -98,7 +98,7 @@
 
 # 6 Представление результатов
 
-Результаты тестирования представлены в документе ["Представление результатов"](../Testing/TestResults.md).
+Результаты тестирования представлены в документе ["Представление результатов"](https://github.com/OdareNNbI/Falling-box/blob/master/Docs/TestResult.md).
 
 <a name="conclusion"/>
 
